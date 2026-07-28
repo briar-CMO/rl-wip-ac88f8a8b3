@@ -1,8 +1,53 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>RevitaLash reporting - connecting...</title>
-<meta http-equiv="refresh" content="0;url=https://rivitalash.myshopify.com/admin/oauth/authorize?client_id=9bcbc5161ddce4ada9c5ac2d15ddf665&scope=read_orders,read_products,read_analytics&redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&state=daily-report-install">
-<meta name="robots" content="noindex,nofollow">
-<style>body{font-family:-apple-system,sans-serif;display:grid;place-items:center;height:100vh;margin:0;background:#141011;color:#F5EFEA}a{color:#D9A7AD}</style>
-</head><body><p>Taking you to Shopify to authorise the reporting connection...<br><br>
-If nothing happens, <a href="https://rivitalash.myshopify.com/admin/oauth/authorize?client_id=9bcbc5161ddce4ada9c5ac2d15ddf665&scope=read_orders,read_products,read_analytics&redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&state=daily-report-install">click here</a>.</p>
-<script>location.replace("https://rivitalash.myshopify.com/admin/oauth/authorize?client_id=9bcbc5161ddce4ada9c5ac2d15ddf665&scope=read_orders,read_products,read_analytics&redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&state=daily-report-install");</script>
-</body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RevitaLash reporting - connecting...</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    body {
+      font-family: -apple-system, sans-serif;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #141011;
+      color: #F5EFEA;
+    }
+
+    a {
+      color: #D9A7AD;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p>Taking you to Shopify to authorise the reporting connection...</p>
+    <p>If nothing happens, <a id="continue-link" href="#">click here</a>.</p>
+    <noscript>
+      JavaScript is required to create a secure, one-time Shopify authorisation link.
+    </noscript>
+  </main>
+  <script>
+    (() => {
+      const nonceBytes = crypto.getRandomValues(new Uint8Array(16));
+      const nonce = Array.from(
+        nonceBytes,
+        byte => byte.toString(16).padStart(2, "0")
+      ).join("");
+      const state = `daily-report-install.${Date.now()}.${nonce}`;
+      const params = new URLSearchParams({
+        client_id: "9bcbc5161ddce4ada9c5ac2d15ddf665",
+        scope: "read_orders,read_products,read_analytics",
+        redirect_uri: "http://localhost:9876/callback",
+        state
+      });
+      const authoriseUrl =
+        `https://rivitalash.myshopify.com/admin/oauth/authorize?${params.toString()}`;
+
+      document.getElementById("continue-link").href = authoriseUrl;
+      window.location.replace(authoriseUrl);
+    })();
+  </script>
+</body>
+</html>
